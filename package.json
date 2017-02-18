@@ -1,0 +1,13 @@
+{
+    "name": "Partout",
+    "description": "Delve, manipulate, transform javascript objects or json.",
+    "keywords": "json manipulation manipulate evolve selector",
+    "license": "GPL-3.0",
+    "scripts": {
+        "test": "mocha"
+    },
+    "dependencies": [],
+    "devDependencies": [
+        { "pegjs": "0.10.0" }
+    ]
+}

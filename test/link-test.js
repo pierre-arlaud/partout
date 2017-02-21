@@ -13,14 +13,78 @@ describe('link', function() {
         new link.ObjectLink(sample, paths).iterate(yielder);
         expect(count).to.equal(expectedCount);
     }
+
+    it('should find children elements', function() {
+        var sample = {
+            a: true,
+            b: false, // only matching element
+            c: { a: 0, b: 0, c: 0 }
+        };
+        var paths = [{
+            connector: 'child',
+            path: 'b'
+        }];
+        count(sample, paths, 1);
+    });
+
+    it('should always match wild card', function() {
+        var sample = {
+            a: {
+                b: {
+                    c: 1 // 1
+                },
+            },
+            b: {
+                b: { // 2
+                    a: 0 // 3
+                },
+                c: 3, // 4
+                d: { // 5
+                    b: false
+                } 
+            }
+        };
+        var paths = [{
+            connector: 'descendant',
+            path: 'b'
+        }, {
+            connector: 'child',
+            path: '*'
+        }];
+        count(sample, paths, 5);
+    });
     
-    it('should iterate on object properties', function() {
+    
+    it('should support "descendant" and "child" connectors combinations', function() {
+        var sample = {
+            a: {
+                b: {
+                    c: 1 // 1
+                },
+                c: 0 // 2
+            },
+            c: {}
+        };
+
+        var paths = [{
+            connector: 'descendant',
+            path: '*'
+        }, {
+            connector: 'child',
+            path: 'c'
+        }];
+        
+        count(sample, paths, 2);
+    });
+    
+    
+    it('should iterate on object properties to find descendants', function() {
         var sample = {
             a: 2,
             b: { a: 0}
         };
         var paths = [{
-            connector: 'start',
+            connector: 'descendant',
             path: 'a'
         }];
         count(sample, paths, 2);
@@ -44,7 +108,7 @@ describe('link', function() {
             }
         };
         var paths = [{
-            connector: 'start',
+            connector: 'descendant',
             path: 'a'
         }];
         count(sample, paths, 4);
@@ -62,14 +126,19 @@ describe('link', function() {
         };
         var paths = [
             {
-                connector: 'start',
+                connector: 'descendant',
                 path: 'a'
             },
             {
-                connector: 'ws',
+                connector: 'descendant',
                 path: 'b'
             }
         ];
+        /* Results:
+           - (a).a.(b)
+           - a.(a).(b)
+           - (a).c.(b)
+           */
         count(sample, paths, 3);
     });
     

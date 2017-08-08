@@ -5,7 +5,7 @@ var expect = chai.expect;
 
 var link = require('../lib/link');
 
-describe('link', function() {
+describe('link', () => {
 
     function count(sample, paths, expectedCount) {
         var count = 0;
@@ -14,7 +14,7 @@ describe('link', function() {
         expect(count).to.equal(expectedCount);
     }
 
-    it('should find children elements', function() {
+    it('should find children elements', () => {
         var sample = {
             a: true,
             b: false, // only matching element
@@ -27,7 +27,7 @@ describe('link', function() {
         count(sample, paths, 1);
     });
 
-    it('should always match wild card', function() {
+    it('should always match wild card', () => {
         var sample = {
             a: {
                 b: {
@@ -55,7 +55,7 @@ describe('link', function() {
     });
     
     
-    it('should support "descendant" and "child" connectors combinations', function() {
+    it('should support "descendant" and "child" connectors combinations', () => {
         var sample = {
             a: {
                 b: {
@@ -78,7 +78,7 @@ describe('link', function() {
     });
     
     
-    it('should iterate on object properties to find descendants', function() {
+    it('should iterate on object properties to find descendants', () => {
         var sample = {
             a: 2,
             b: { a: 0}
@@ -90,7 +90,7 @@ describe('link', function() {
         count(sample, paths, 2);
     });
 
-    it('should search for nested paths also on matching objects', function() {
+    it('should search for nested paths also on matching objects', () => {
         var sample = {
             a: { // 1
                 a: 2, // 2
@@ -114,7 +114,7 @@ describe('link', function() {
         count(sample, paths, 4);
     });
 
-    it('should search for paths recursively', function() {
+    it('should search for paths recursively', () => {
         var sample = {
             a: {
                 a: { b: 0 },

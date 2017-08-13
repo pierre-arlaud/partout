@@ -7,6 +7,12 @@ var partout = require('../lib/app');
 
 describe('app', () => {
 
+    it('should support case with no selector given', () => {
+        expect(partout({}).find()).to.have.lengthOf(0);
+        expect(partout({}, '').find()).to.have.lengthOf(0);
+        expect(partout({'': 'empty-key'}, '').find()).to.have.lengthOf(1);
+    });
+    
     it('should count elements', () => {
         var sample = {
             a: 0,
@@ -23,7 +29,34 @@ describe('app', () => {
         }
         expect(partout(sample, ['a']).set(-1).a).to.equal(-1);
     });
+
+
     
+    it('should allow flexible selectors passing', () => {
+        var sample = {
+            person: {
+                address: 'here',
+            }
+        };
+        
+        expect(partout(sample, 'person').find('address')).to.have.lengthOf(1);
+        expect(partout(sample, ['person']).find('address')).to.have.lengthOf(1);
+        expect(partout(sample, 'person').find(['address'])).to.have.lengthOf(1);
+        expect(partout(sample, ['person']).find(['address'])).to.have.lengthOf(1);
+    });
+
+    it('should have flexible selectors support for most methods', () => {
+        var sample = {
+            person: {
+                address: 'here',
+                name: 'Mr'
+            }
+        };
+
+        expect(partout(sample).find('address')).to.have.lengthOf(1);
+        expect(partout(sample, ['person']).count(['address', 'name'])).to.equal(2);
+        expect(partout(sample, 'person').set(['name'], 'Mrs').person.name).to.equal('Mrs');
+    });
 
 });
 

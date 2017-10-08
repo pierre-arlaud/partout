@@ -7,6 +7,9 @@ var link = require('../lib/link');
 
 describe('link', () => {
 
+    /** Sample counting function that operates of object sources.
+     * Asserts a number of result as well.
+     */
     function count(sample, paths, expectedCount) {
         var count = 0;
         var yielder = () => count++;
@@ -140,6 +143,35 @@ describe('link', () => {
            - (a).c.(b)
            */
         count(sample, paths, 3);
+    });
+
+    it('should filter by type', () => {
+        var sample = {
+            data: [{
+                age: 3
+            }, {
+                age: null
+            }, {
+                age: 8
+            }, {
+                age: 'seven'
+            }]
+        };
+
+        var paths = [
+            {
+                connector: 'child',
+                path: 'data'
+            },
+            {
+                connector: 'descendant',
+                path: 'age',
+                type: 'number'
+            }
+        ];
+
+
+        count(sample, paths, 2);
     });
     
 });

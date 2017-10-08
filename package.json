@@ -6,8 +6,10 @@
     "scripts": {
         "test": "mocha"
     },
-    "dependencies": [],
-    "devDependencies": [
-        { "pegjs": "0.10.0" }
-    ]
+    "dependencies": {},
+    "devDependencies": {
+		"pegjs": "0.10.0",
+		"mocha": "^4",
+		"chai": "^4"
+	}
 }

@@ -3,7 +3,7 @@
 var chai = require('chai');
 var expect = chai.expect;
 
-var link = require('../lib/link');
+var linkModule = require('../lib/link');
 
 describe('link', () => {
 
@@ -13,7 +13,8 @@ describe('link', () => {
     function count(sample, paths, expectedCount) {
         var count = 0;
         var yielder = () => count++;
-        new link.ObjectLink(sample, paths).iterate(yielder);
+        var link = Array.isArray(sample) ? new linkModule.ArrayLink(sample, paths) : new linkModule.ObjectLink(sample, paths);
+        link.iterate(yielder);
         expect(count).to.equal(expectedCount);
     }
 

@@ -4,7 +4,8 @@
     "keywords": "json manipulation manipulate evolve selector",
     "license": "GPL-3.0",
     "scripts": {
-        "test": "mocha"
+        "test": "mocha",
+        "build-grammar": "pegjs lib/selector-parser.pegjs"
     },
     "dependencies": {},
     "devDependencies": {

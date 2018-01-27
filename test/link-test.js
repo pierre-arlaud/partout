@@ -174,5 +174,51 @@ describe('link', () => {
         count(sample, paths, 2);
     });
     
-});
+    it('should match rules', () => {
 
+        var sample = [
+            {
+                owner: {
+                    name: 'John Doe',
+                    age: '12'
+                }
+            }, {
+                owner: {
+                    name: 81,
+                    age: 11
+                }
+            }, {
+                owner: {
+                    name: 'John Smith',
+                }
+            }, {
+                owner: { // The only match
+                    name: 'Jane Doe',
+                    age: 17
+                }
+            }, {
+                age: 6
+            }
+        ];
+
+        var paths = [
+            {
+                connector: 'descendant',
+                path: 'owner',
+                rules: {
+                    path: 'age',
+                    type: 'number'
+                }
+            },
+            {
+                connector: 'child',
+                path: 'name',
+                type: 'string'
+            }
+        ];
+        
+        count(sample, paths, 1);
+    });
+    
+    
+});

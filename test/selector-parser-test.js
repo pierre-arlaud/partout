@@ -5,17 +5,17 @@ var parser = require('../lib/selector-parser');
 var parse = parser.parse;
 
 describe('selector-parser', () => {
-
+    
     it('should parse the empty string as an empty array', () => {
         expect(parse('')).to.have.lengthOf(0);
     });
-
+    
     it('should parse a single word as a sole indirect starting selector', () => {
         var result = parse('word');
         expect(result).to.have.lengthOf(1);
         expect(result[0]).to.have.property('connector').equal('descendant');
     });
-
+    
     it('should treat all whitespaces equally', () => {
         var result1 = parse('word word');
         var result2 = parse('word  word');
@@ -39,7 +39,7 @@ describe('selector-parser', () => {
         expect(result[1]).to.have.property('connector').equal('descendant');
         expect(result[2]).to.have.property('connector').equal('child');
     });
-
+    
     it('should parse all typing checks', () => {
         function checkType(path, type) {
             var result = parse(path);
@@ -49,6 +49,12 @@ describe('selector-parser', () => {
         expect(() => parse('var:randomtype')).to.throw();
         checkType('var:string', 'string');
         checkType('person[name]:object', 'object');
+    });
+    
+    it('should parse conditionals', () => {
+        var result = parse('person[adress] age:number');
+        expect(result[0]).to.have.property('rules');
+        expect(result[1]).to.have.property('path', 'age');
     });
     
 });

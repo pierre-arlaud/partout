@@ -68,5 +68,14 @@ describe('app', () => {
         expect(partout(sample, 'person').match('name')).to.be.true;
     });
     
+    it('should allow backtracking to avoid looping too much', () => {
+        var sample = {
+            first: { key: 2 },
+            second: { key: 3 }
+        };
+
+        expect(() => partout(sample).findOne('key')).not.to.throw();
+    });
+
 });
 

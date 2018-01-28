@@ -3,13 +3,16 @@
     "description": "Delve, manipulate, transform javascript objects or json.",
     "keywords": "json manipulation manipulate evolve selector",
     "license": "GPL-3.0",
+    "main": "lib/app.js",
     "scripts": {
         "test": "mocha",
+        "build": "npm run build-grammar",
         "build-grammar": "pegjs lib/selector-parser.pegjs"
     },
-    "dependencies": {},
+    "dependencies": {
+		"pegjs": "0.10.0"
+    },
     "devDependencies": {
-		"pegjs": "0.10.0",
 		"mocha": "^4",
 		"chai": "^4"
 	}
